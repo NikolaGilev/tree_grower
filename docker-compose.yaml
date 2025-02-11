@@ -2,9 +2,10 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:15
+    image: postgres:latest
     container_name: tree_grower_db
-    restart: always
+    restart: unless-stopped
+    # TODO: move all envs to file
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -15,9 +16,9 @@ services:
       - "5432:5432"
 
   app:
-    image: your-dockerhub-username/tree_grower:latest
+    image: nikog23/kiii_tree_grower:latest
     container_name: tree_grower_app
-    restart: always
+    restart: unless-stopped
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DATABASE}
     depends_on:

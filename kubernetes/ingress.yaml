@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: kiii-tree-grower-ingress
+  name: kiii-project-ingress
   namespace: kiii
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
@@ -13,6 +13,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: kiii-tree-grower-service
+            name: kiii-project-service
             port:
               number: 80

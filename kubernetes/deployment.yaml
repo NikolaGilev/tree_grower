@@ -1,3 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kiii-project-config
+  namespace: kiii
+data:
+  POSTGRES_HOST: kiii-project-postgres-service.kiii.svc.cluster.local
+  POSTGRES_DATABASE: postgres
+  POSTGRES_USER: postgres
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kiii-project-secret
+  namespace: kiii
+type: Opaque
+data:
+  password: cG9zdGdyZXM=
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,7 +33,7 @@ spec:
         app: kiii-project
     spec:
       containers:
-        - name: kiii-tree-grower
+        - name: kiii-project
           image: nikog23/kiii_tree_grower:latest
           imagePullPolicy: Always
           resources:
@@ -22,7 +41,7 @@ spec:
               memory: "128Mi"
               cpu: "500m"
           ports:
-            - containerPort: 8000 # might be wrong
+            - containerPort: 80
           envFrom:
             - configMapRef:
                 name: kiii-project-config

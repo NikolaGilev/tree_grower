@@ -1,30 +1,30 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: tree-grower-postgres-config
+  name: kiii-project-postgres-config
   namespace: kiii
 data:
-  POSTGRES_DB: tree_grower_db
+  POSTGRES_DB: postgres
   POSTGRES_USER: postgres
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: tree-grower-postgres-secret
+  name: kiii-project-postgres-secret
   namespace: kiii
 type: Opaque
 data:
-  POSTGRES_PASSWORD: "YWp2YXIgc28gc2lyZW5qZQ=="  
+  password: cG9zdGdyZXM=
 ---
-apiVersion: v1
 kind: PersistentVolumeClaim
+apiVersion: v1
 metadata:
-  name: tree-grower-postgres-pvc
+  name: kiii-project-postgres-pvc
   namespace: kiii
   labels:
     app: postgres
 spec:
-  storageClassName: local-path
+  storageClassName: hostpath
   accessModes:
     - ReadWriteOnce
   resources:
@@ -34,10 +34,10 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: tree-grower-postgres
+  name: kiii-project-postgres
   namespace: kiii
 spec:
-  serviceName: tree-grower-postgres-service
+  serviceName: kiii-project-postgres-service
   selector:
     matchLabels:
       app: postgres
@@ -53,28 +53,28 @@ spec:
           image: postgres:latest
           envFrom:
             - configMapRef:
-                name: tree-grower-postgres-config
+                name: kiii-project-postgres-config
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: tree-grower-postgres-secret
-                  key: POSTGRES_PASSWORD
+                  name: kiii-project-postgres-secret
+                  key: password
           ports:
             - containerPort: 5432
               name: postgres-port
           volumeMounts:
-            - name: tree-grower-postgres-data
+            - name: kiii-project-postgres-data
               mountPath: /var/lib/postgresql/data
       volumes:
-        - name: tree-grower-postgres-data
+        - name: kiii-project-postgres-data
           persistentVolumeClaim:
-            claimName: tree-grower-postgres-pvc
+            claimName: kiii-project-postgres-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: kiii-tree-grower-service
+  name: kiii-project-postgres-service
   namespace: kiii
 spec:
   selector:

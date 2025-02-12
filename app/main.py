@@ -4,11 +4,11 @@ from typing import List
 from contextlib import asynccontextmanager
 import uvicorn
 
-from db import create_db_and_tables
-from models import Tree
-from crud import create_tree, get_trees, get_tree, update_tree, delete_tree
-from schemas import TreeCreate, TreeUpdate, TreeResponse
-from dependencies import get_database
+from app.db import create_db_and_tables
+from app.models import Tree
+from app.crud import create_tree, get_trees, get_tree, update_tree, delete_tree
+from app.schemas import TreeCreate, TreeUpdate, TreeResponse
+from app.dependencies import get_database
 
 
 @asynccontextmanager

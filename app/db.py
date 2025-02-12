@@ -1,29 +1,18 @@
 import os
-
 from sqlmodel import SQLModel, create_engine, Session
-
-# from sqlalchemy.orm import sessionmaker
-from sqlalchemy import URL
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-POSTGRES_URL = os.getenv("POSTGRES_URL")
-POSTGRES_DATABASE = os.getenv("POSTGRES_DATABASE")
-POSTGRES_USER = os.getenv("POSTGRES_USER")
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "")
+DB_USER = os.getenv("POSTGRES_USER")
+DB_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+DB_HOST = os.getenv("POSTGRES_HOST")
+DB_PORT = os.getenv("POSTGRES_PORT")
+DB_NAME = os.getenv("POSTGRES_DB")
 
-
-database_url = url = URL.create(
-    drivername="postgresql",
-    username=POSTGRES_USER,
-    password=POSTGRES_PASSWORD,
-    host=POSTGRES_URL,
-    database=POSTGRES_DATABASE,
-    port=5432,
+engine = create_engine(
+    f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
 )
-engine = create_engine(database_url, echo=True)
-# SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
 
 def get_db():

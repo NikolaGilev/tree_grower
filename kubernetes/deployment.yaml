@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kiii-project-deployment
+  namespace: kiii
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: kiii-project
+  template:
+    metadata:
+      labels:
+        app: kiii-project
+    spec:
+      containers:
+        - name: kiii-tree-grower
+          image: nikog23/kiii_tree_grower:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8000 # might be wrong
+          envFrom:
+            - configMapRef:
+                name: kiii-project-config
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kiii-project-secret
+                  key: password

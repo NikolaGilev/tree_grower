@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import Tree
+from app.models import Tree
 
 
 def create_tree(db: Session, tree: Tree):

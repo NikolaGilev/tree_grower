@@ -11,8 +11,8 @@ sqlmodel = "^0.0.22"
 fastapi = "^0.115.8"
 sqlalchemy = "^2.0.38"
 psycopg2 = "^2.9.10"
-uvicorn = "^0.34.0"
 python-dotenv = "^1.0.1"
+uvicorn = "^0.34.0"
 
 
 [build-system]

@@ -4,8 +4,8 @@ metadata:
   name: kiii-project-config
   namespace: kiii
 data:
-  POSTGRES_HOST: kiii-project-postgres-service.kiii.svc.cluster.local
-  POSTGRES_DATABASE: postgres
+  POSTGRES_HOST: kiii-project-postgres-service
+  POSTGRES_DB: postgres
   POSTGRES_USER: postgres
 ---
 apiVersion: v1
